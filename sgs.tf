@@ -4,38 +4,19 @@ resource "aws_security_group" "allow_traffic" {
     vpc_id      = var.vpc
 }
 
-resource "aws_security_group_rule" "ingress_tcp" {
-    type              = "ingress"
-    from_port         = 0
-    to_port           = 0
-    protocol          = "tcp"
+
+resource "aws_vpc_security_group_ingress_rule" "allow_postgre_conexion2_inbound" {
+    ip_protocol = "tcp"
+    from_port         = 5432
+    to_port           = 5432
     security_group_id = aws_security_group.allow_traffic.id
-    cidr_blocks       = ["0.0.0.0/0"]
+    cidr_ipv4 = "0.0.0.0/0"
 }
 
-resource "aws_security_group_rule" "egress_tcp" {
-    type              = "egress"
-    from_port         = 0
-    to_port           = 0
-    protocol          = "tcp"
+resource "aws_vpc_security_group_egress_rule" "allow_postgre_conexion2_outbound" {
+    ip_protocol = "tcp"
+    from_port         = 5432
+    to_port           = 5432
     security_group_id = aws_security_group.allow_traffic.id
-    cidr_blocks       = ["0.0.0.0/0"]
-}
-
-resource "aws_security_group_rule" "ingress_icmp" {
-    type              = "ingress"
-    from_port         = 0
-    to_port           = 0
-    protocol          = "icmp"
-    security_group_id = aws_security_group.allow_traffic.id
-    cidr_blocks       = ["0.0.0.0/0"]
-}
-
-resource "aws_security_group_rule" "egress_icmp" {
-    type              = "egress"
-    from_port         = 0
-    to_port           = 0
-    protocol          = "icmp"
-    security_group_id = aws_security_group.allow_traffic.id
-    cidr_blocks       = ["0.0.0.0/0"]
+    cidr_ipv4 = "0.0.0.0/0"
 }
